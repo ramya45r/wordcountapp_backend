@@ -7,7 +7,21 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = ['http://localhost:3000', 'https://yourfrontendapp.com'];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g., mobile apps or curl requests)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true, // if you want to include cookies or authorization headers
+  })
+);
 app.use(bodyParser.json());
 
 // Routes
