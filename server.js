@@ -7,11 +7,9 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-const cors = require('cors');
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use(bodyParser.json());
-
 // Routes
 const insightsRoutes = require("./routes/insightsRoutes");
 app.use("/api/insights", insightsRoutes);
